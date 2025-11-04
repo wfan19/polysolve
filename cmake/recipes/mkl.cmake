@@ -117,13 +117,14 @@ else()
     set(MKL_REMOTES mkl-include mkl mkl-devel)
 endif()
 
-include(CPM)
+include(FetchContent)
 foreach(name IN ITEMS ${MKL_REMOTES})
-    CPMAddPackage(
-        NAME ${name}
+    FetchContent_Declare(
+        ${name}
         URL https://anaconda.org/conda-forge/${name}/${MKL_VERSION}/download/${MKL_PLATFORM}/${${name}-${MKL_PLATFORM}-file}
-        # URL_MD5 ${${name}-${MKL_PLATFORM}-md5}
+        URL_MD5 ${${name}-${MKL_PLATFORM}-md5}
     )
+    FetchContent_MakeAvailable(${name})
 endforeach()
 
 ################################################################################
